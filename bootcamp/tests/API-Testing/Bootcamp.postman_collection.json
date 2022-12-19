@@ -1,0 +1,192 @@
+{
+	"info": {
+		"_postman_id": "d6fa3a1e-ad07-4d7b-8be0-e2f141054ac2",
+		"name": "Bootcamp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6920633"
+	},
+	"item": [
+		{
+			"name": "get pokeman",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/pokemon/charmander",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"pokemon",
+						"charmander"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get pokeman moves learned by",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/move-learn-method/{{learnedby}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"move-learn-method",
+						"{{learnedby}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get pokeman moves",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json()\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function() {\r",
+							"   pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"validate name of favorite pokemon\", function () {\r",
+							"    pm.expect(jsonData.learned_by_pokemon[0].name).to.eql(pm.environment.get(\"pokemon\"));\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/move/{{move}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"move",
+						"{{move}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get pokeman by moves URL",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json()\r",
+							"\r",
+							"\r",
+							"pm.test(\"validate name of favorite pokemon\", function () {\r",
+							"    pm.expect(jsonData.learned_by_pokemon[0].name).to.eql(pm.environment.get(\"favorite\"));\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{moveUrl}}",
+					"host": [
+						"{{moveUrl}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get fave pokeman",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"favorite\", \"charmander\" )"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json()\r",
+							"\r",
+							"pm.environment.set(\"moveName\", jsonData.moves[0].move.name)\r",
+							"pm.environment.set(\"moveUrl\", jsonData.moves[0].move.url)\r",
+							"\r",
+							"\r",
+							"\r",
+							"pm.test(\"validate name of favorite pokemon\", function () {\r",
+							"    pm.expect(jsonData.learned_by_pokemon[0].name).to.eql(pm.environment.get(\"favorite\"));\r",
+							"\r",
+							"});\r",
+							" \r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(700);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/pokemon/{{favorite}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"pokemon",
+						"{{favorite}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "pokemon",
+			"value": "pokemon"
+		}
+	]
+}

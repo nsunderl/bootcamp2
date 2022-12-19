@@ -1,0 +1,20 @@
+{
+  "name": "bootcamp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "api-testing": "newman run ./API_Testing/Bootcamp.postman_collection.json",
+    "api-environment": ""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.27.1"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "newman": "^5.3.2"
+  }
+}
